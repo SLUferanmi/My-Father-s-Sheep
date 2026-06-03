@@ -1275,3 +1275,205 @@ a {
   height: 22px;
   flex-shrink: 0;
 }
+
+/* ==========================================================================
+   MOBILE & RESPONSIVE REFINEMENTS (OPTIMIZATION FOR ALL SCREEN SIZES)
+   ========================================================================== */
+
+/* Tablet Viewports (max-width: 992px) */
+@media (max-width: 992px) {
+  .hero-title {
+    font-size: 2.8rem;
+  }
+  .player-card {
+    padding: 1.75rem;
+  }
+}
+
+/* Mobile Viewports (max-width: 768px) */
+@media (max-width: 768px) {
+  html {
+    font-size: 15px; /* Scale down base text size */
+  }
+  
+  .section {
+    padding: 4rem 1.25rem;
+  }
+  
+  .hero-title {
+    font-size: 2.2rem;
+    line-height: 1.15;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .hero-ctas {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.85rem;
+  }
+  
+  .hero-ctas .btn {
+    width: 100%;
+  }
+
+  .player-card {
+    padding: 1.5rem;
+  }
+
+  .bento-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .bento-card h3 {
+    font-size: 1.6rem;
+  }
+
+  .luxury-product-info {
+    padding: 1.5rem;
+  }
+
+  .luxury-product-title {
+    font-size: 1.45rem;
+  }
+
+  .luxury-product-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+
+  .testimony-form-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .testimony-form-card h3 {
+    font-size: 1.8rem;
+  }
+
+  .form-checkbox-row {
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .luxury-testimony-card {
+    padding: 1.75rem;
+  }
+
+  .testimony-quote-text {
+    font-size: 1.1rem;
+  }
+
+  .footer-cta-section {
+    padding: 5rem 1.25rem;
+  }
+
+  .footer-cta-section h2 {
+    font-size: 2.2rem;
+  }
+
+  .footer-cta-section p {
+    font-size: 0.95rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .channel-buttons-row {
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    gap: 0.85rem;
+  }
+
+  .luxury-channel-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Small Phone Viewports (max-width: 600px) */
+@media (max-width: 600px) {
+  .navbar {
+    top: 0.75rem;
+    width: 94%;
+  }
+
+  .nav-container {
+    padding: 0.45rem 1rem;
+  }
+
+  .logo-graphic {
+    width: 26px;
+    height: 26px;
+  }
+
+  .logo-text {
+    font-size: 1.05rem;
+  }
+
+  .logo-text span.small {
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+  }
+
+  .nav-links {
+    gap: 0.95rem;
+  }
+
+  .nav-item {
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-cta {
+    display: none; /* Hide subscribe CTA on small headers */
+  }
+
+  .premium-toast {
+    bottom: 1.5rem;
+    right: 5%;
+    left: 5%;
+    width: 90%;
+    padding: 0.9rem 1.2rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+  }
+}
+
+/* Micro Devices (max-width: 480px) */
+@media (max-width: 480px) {
+  .player-volume-slider, 
+  .player-volume-slider + svg,
+  .player-btn-skip,
+  .player-btn-forward {
+    display: none !important; /* Keep only central controls for clean sizing */
+  }
+
+  .player-buttons {
+    margin: 0 auto;
+  }
+
+  .player-controls-row {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .player-cover {
+    width: 60px;
+    height: 60px;
+  }
+
+  .player-track-title {
+    font-size: 1.15rem;
+  }
+
+  .player-track-info {
+    max-width: calc(100% - 75px);
+  }
+}
+
