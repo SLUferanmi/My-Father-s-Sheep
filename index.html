@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="We are lit to be seen, sent to reveal Christ, and sustained by belonging to Him. My Father's Sheep podcast is where the minds of men are transformed into the likeness of Him.">
+  <title>My Father's Sheep | Podcast & Community</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="assets/logo.svg" type="image/svg+xml">
+</head>
+<body>
+
+  <!-- Background Ambient Glow Blobs -->
+  <div class="ambient-blobs-container">
+    <div class="ambient-blob blob-1"></div>
+    <div class="ambient-blob blob-2"></div>
+    <div class="ambient-blob blob-3"></div>
+  </div>
+
+  <!-- Floating Navigation Pill -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-logo" onclick="location.reload();">
+        <div class="logo-graphic">
+          <svg viewBox="0 0 200 200" fill="currentColor" width="100%" height="100%">
+            <circle cx="100" cy="100" r="90" fill="none" stroke="currentColor" stroke-width="6" />
+            <path d="M 145,170 L 145,70 A 22,22 0 0,0 101,70 A 10,10 0 0,1 111,63 A 12,12 0 0,1 135,70" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" />
+            <path d="M 85,110 Q 100,105 115,110 L 110,140 Q 100,150 90,140 Z" fill="currentColor" />
+            <path d="M 82,108 C 85,98 115,98 118,108 Q 100,102 82,108 Z" fill="currentColor" />
+            <path d="M 85,110 C 72,110 65,122 75,125 C 80,122 83,118 85,110 Z" fill="currentColor" />
+            <path d="M 115,110 C 128,110 135,122 125,125 C 120,122 117,118 115,110 Z" fill="currentColor" />
+          </svg>
+        </div>
+        <div class="logo-text">
+          MY Father's Sheep
+          <span class="small">Fellowship</span>
+        </div>
+      </a>
+      
+      <div class="nav-links">
+        <div class="nav-item active" data-tab="home-view">Home</div>
+        <div class="nav-item" data-tab="shop-view">Shop</div>
+        <div class="nav-item" data-tab="testimony-view">Testimonies</div>
+        <button class="nav-cta" id="nav-subscribe-cta">Subscribe</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content Wrapper -->
+  <main class="main-content">
+
+    <!-- ==========================================================================
+         1. HOME / PODCAST VIEW
+         ========================================================================== -->
+    <div id="home-view" class="tab-content active">
+      <div class="container section" style="padding-top: 3rem;">
+        
+        <!-- Hero Section Grid -->
+        <header class="hero-layout">
+          <div class="hero-text">
+            <span class="hero-badge">Mind Transformation</span>
+            <h1 class="hero-title">We are lit to be seen, sent to reveal <em>Christ</em>, and sustained by belonging to Him.</h1>
+            <p class="hero-subtitle">My Father’s Sheep podcast is where the minds of men are transformed into the likeness of Him. Grounded in Scripture, built for brotherhood.</p>
+            <div class="hero-ctas">
+              <button class="btn btn-primary" onclick="document.getElementById('spotify-player-section').scrollIntoView({behavior: 'smooth'});">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="width: 16px; height: 16px;">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+                </svg>
+                Listen to Episodes
+              </button>
+              <button class="btn btn-secondary" id="hero-shop-cta">Shop Merch</button>
+            </div>
+          </div>
+
+          <!-- Glassmorphic Media Player -->
+          <div class="player-wrapper">
+            <div class="player-card">
+              <div class="player-header">
+                <div class="player-cover">
+                  <img src="assets/logo.svg" alt="Podcast Album Cover" class="player-cover-img">
+                </div>
+                <div class="player-track-info">
+                  <span class="player-track-tag">Recent Episode</span>
+                  <h3 class="player-track-title">Episode 18: Iron & Spirit</h3>
+                  <span class="player-track-host">by My Father's Sheep Fellowship</span>
+                </div>
+              </div>
+              
+              <!-- Animated Waveform -->
+              <div class="player-waveform">
+                <div class="waveform-bar" style="height: 12px;"></div>
+                <div class="waveform-bar" style="height: 24px;"></div>
+                <div class="waveform-bar" style="height: 16px;"></div>
+                <div class="waveform-bar" style="height: 32px;"></div>
+                <div class="waveform-bar" style="height: 20px;"></div>
+                <div class="waveform-bar" style="height: 28px;"></div>
+                <div class="waveform-bar" style="height: 14px;"></div>
+                <div class="waveform-bar" style="height: 38px;"></div>
+                <div class="waveform-bar" style="height: 22px;"></div>
+                <div class="waveform-bar" style="height: 34px;"></div>
+                <div class="waveform-bar" style="height: 16px;"></div>
+                <div class="waveform-bar" style="height: 30px;"></div>
+                <div class="waveform-bar" style="height: 18px;"></div>
+                <div class="waveform-bar" style="height: 26px;"></div>
+                <div class="waveform-bar" style="height: 12px;"></div>
+                <div class="waveform-bar" style="height: 36px;"></div>
+                <div class="waveform-bar" style="height: 20px;"></div>
+                <div class="waveform-bar" style="height: 32px;"></div>
+                <div class="waveform-bar" style="height: 14px;"></div>
+                <div class="waveform-bar" style="height: 28px;"></div>
+                <div class="waveform-bar" style="height: 16px;"></div>
+                <div class="waveform-bar" style="height: 24px;"></div>
+                <div class="waveform-bar" style="height: 10px;"></div>
+                <div class="waveform-bar" style="height: 18px;"></div>
+              </div>
+
+              <!-- Controls Row -->
+              <div class="player-controls-row">
+                <span class="player-time">01:45 / 45:12</span>
+                <div class="player-buttons">
+                  <button class="player-btn player-btn-skip">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" style="width: 18px; height: 18px;">
+                      <path d="M9.195 18.44c1.25.713 2.805-.19 2.805-1.629v-2.34l6.945 3.969c1.25.714 2.805-.19 2.805-1.629V5.53c0-1.44-1.555-2.343-2.805-1.628L12 7.87v-2.34c0-1.44-1.555-2.343-2.805-1.628l-7.108 4.061c-1.26.72-1.26 2.536 0 3.256l7.108 4.061Z" />
+                    </svg>
+                  </button>
+                  <button class="player-btn player-btn-play" aria-label="Play/Pause">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; margin-left: 3px;">
+                      <path fill-rule="evenodd" d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z" clip-rule="evenodd"/>
+                    </svg>
+                  </button>
+                  <button class="player-btn player-btn-forward">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" style="width: 18px; height: 18px;">
+                      <path d="M5.055 7.06c-1.25-.714-2.805.189-2.805 1.628v8.623c0 1.44 1.555 2.343 2.805 1.628L12 14.97v2.34c0 1.44 1.555 2.343 2.805 1.628l7.108-4.06c1.26-.72 1.26-2.536 0-3.256L14.805 7.56v2.34L5.055 7.06Z" />
+                    </svg>
+                  </button>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.4rem;">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 14px; height: 14px; color: var(--color-text-muted);">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
+                  </svg>
+                  <input type="range" class="player-volume-slider" min="0" max="100" value="80" aria-label="Volume">
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Bento Grid Section -->
+        <section class="section" style="padding: 6rem 0 3rem 0;">
+          <div class="section-header">
+            <span class="hero-tagline" style="margin-bottom: 0.75rem; display: block;">The Pillars</span>
+            <h2 style="font-size: 2.8rem;">How We Walk Together</h2>
+          </div>
+          
+          <div class="bento-grid">
+            <!-- Card 1: Lit to be Seen -->
+            <div class="bento-card bento-card-large">
+              <div class="bento-icon-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 24px; height: 24px;">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 0 0 .495-7.468l.005-.035a6.75 6.75 0 1 0-11.96 0 3.75 3.75 0 0 0 .495 7.468A3.75 3.75 0 0 0 6 21.25h12a3.75 3.75 0 0 0 0-7.5" />
+                </svg>
+              </div>
+              <h3>Lit to be Seen</h3>
+              <p>We are called out of darkness to stand as visible reflections of Christ's love, justice, and purity. This pillar addresses the daily call for men to walk in complete transparency, leading families with integrity, and lighting up communities through active Christian witness.</p>
+            </div>
+
+            <!-- Card 2: Sent to Reveal -->
+            <div class="bento-card bento-card-medium">
+              <div class="bento-icon-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 24px; height: 24px;">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                </svg>
+              </div>
+              <h3>Sent to Reveal</h3>
+              <p>Commissioned into the world with a distinct message. Through authentic conversations and scriptural wisdom, we reveal the character and redemptive work of Jesus Christ to transform minds and hearts.</p>
+            </div>
+
+            <!-- Card 3: Sustained by Belonging -->
+            <div class="bento-card bento-card-full">
+              <div class="bento-icon-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 24px; height: 24px;">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+                </svg>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <h3>Sustained by Belonging</h3>
+                <p>We are not meant to walk alone. Spiritual growth is nurtured in Christian fellowship. By anchoring ourselves in deep, authentic relationship with the Father and establishing absolute accountability with brothers in faith, we find the spiritual endurance and strength to stand firm against the drifts of modern culture.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Spotify Embed Showcase -->
+        <section class="section" id="spotify-player-section" style="padding-top: 3rem;">
+          <div class="section-header" style="margin-bottom: 3.5rem;">
+            <span class="hero-tagline" style="margin-bottom: 0.75rem; display: block;">Podcast Stream</span>
+            <h2 style="font-size: 2.8rem; margin-bottom: 1rem;">Direct Spotify Access</h2>
+            <p>Tune in directly via our web player. Access past sessions on identity, calling, faith, and Christian alignment.</p>
+          </div>
+          <div class="player-card" style="padding: 1rem; border-radius: 16px; background-color: #000; overflow: hidden; height: 352px;">
+            <iframe style="border-radius:12px; border:none;" src="https://open.spotify.com/embed/show/7xrIUf5cCHkh6BljT7ALle?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         2. SHOP / MERCHANDISE VIEW
+         ========================================================================== -->
+    <div id="shop-view" class="tab-content">
+      <div class="container section" style="padding-top: 3rem;">
+        <header class="shop-intro">
+          <span class="hero-tagline" style="margin-bottom: 0.75rem; display: block;">Luxury Apparel</span>
+          <h2 style="font-size: 2.8rem; margin-bottom: 1rem;">The Collection</h2>
+          <p style="color: var(--color-text-muted);">Beautiful, minimal garments carefully crafted to represent the fellowship. Made with heavyweight combed organic cotton.</p>
+        </header>
+
+        <!-- Asymmetric Staggered Shop Grid -->
+        <div class="shop-asymmetric-layout">
+          
+          <!-- Product Card 1: Signature Tee -->
+          <div class="shop-item-wrapper">
+            <div class="luxury-product-card">
+              <!-- Frosted Glass Lock Overlay -->
+              <div class="glass-locked-overlay">
+                <span class="glow-soon-badge">Coming Soon</span>
+                <h4 class="locked-title">Signature Tee</h4>
+                <p class="locked-subtext">Currently in production. Subscribe to our list below for notifications and priority drop access.</p>
+              </div>
+
+              <div class="luxury-image-container" id="tee-container">
+                <img src="assets/tshirt.png" alt="Signature Tee Mockup" class="luxury-product-img">
+              </div>
+              
+              <div class="luxury-product-info">
+                <div class="luxury-product-meta">
+                  <h3 class="luxury-product-title">Signature T-Shirt</h3>
+                  <span class="luxury-product-price">$28.00</span>
+                </div>
+                <p class="luxury-product-desc">Relaxed-fit organic combed cotton crewneck featuring the circular flock emblem printed on the center chest.</p>
+                <div class="luxury-product-options">
+                  <span class="form-label" style="margin-bottom: 0; font-size: 0.72rem;">Color: <strong class="color-label" style="color: var(--color-accent);">Cream</strong></span>
+                  <div class="swatch-glow-group">
+                    <div class="pulse-swatch swatch-cream active" data-color="Cream" data-hex="#FAF6EE"></div>
+                    <div class="pulse-swatch swatch-black" data-color="Black" data-hex="#1A1A1A"></div>
+                    <div class="pulse-swatch swatch-white" data-color="White" data-hex="#FFFFFF"></div>
+                    <div class="pulse-swatch swatch-sand" data-color="Sand" data-hex="#D2B48C"></div>
+                    <div class="pulse-swatch swatch-olive" data-color="Olive" data-hex="#556B2F"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Card 2: Essential Hoodie -->
+          <div class="shop-item-wrapper">
+            <div class="luxury-product-card">
+              <!-- Frosted Glass Lock Overlay -->
+              <div class="glass-locked-overlay">
+                <span class="glow-soon-badge">Coming Soon</span>
+                <h4 class="locked-title">Essential Hoodie</h4>
+                <p class="locked-subtext">Currently in production. Subscribe to our list below for notifications and priority drop access.</p>
+              </div>
+
+              <div class="luxury-image-container" id="hoodie-container" style="background-color: #D2B48C;">
+                <img src="assets/hoodie.png" alt="Essential Hoodie Mockup" class="luxury-product-img">
+              </div>
+              
+              <div class="luxury-product-info">
+                <div class="luxury-product-meta">
+                  <h3 class="luxury-product-title">Essential Hoodie</h3>
+                  <span class="luxury-product-price">$54.00</span>
+                </div>
+                <p class="luxury-product-desc">Ultra-soft heavy fleece hoodie with drop shoulder, featuring the embroidered flock emblem on the chest.</p>
+                <div class="luxury-product-options">
+                  <span class="form-label" style="margin-bottom: 0; font-size: 0.72rem;">Color: <strong class="color-label" style="color: var(--color-accent);">Sand</strong></span>
+                  <div class="swatch-glow-group">
+                    <div class="pulse-swatch swatch-sand active" data-color="Sand" data-hex="#D2B48C"></div>
+                    <div class="pulse-swatch swatch-black" data-color="Black" data-hex="#1A1A1A"></div>
+                    <div class="pulse-swatch swatch-cream" data-color="Cream" data-hex="#FAF6EE"></div>
+                    <div class="pulse-swatch swatch-olive" data-color="Olive" data-hex="#556B2F"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         3. TESTIMONY HUB VIEW
+         ========================================================================== -->
+    <div id="testimony-view" class="tab-content">
+      <div class="container section" style="padding-top: 3rem;">
+        <header class="testimony-intro">
+          <span class="hero-tagline" style="margin-bottom: 0.75rem; display: block;">Grace Stories</span>
+          <h2 style="font-size: 2.8rem; margin-bottom: 1rem;">Community Board</h2>
+          <p style="color: var(--color-text-muted);">"They overcame him by the blood of the Lamb and by the word of their testimony." — Revelation 12:11</p>
+        </header>
+
+        <div class="testimony-board-layout">
+          <!-- Submission Form Card -->
+          <div class="testimony-form-card">
+            <h3 style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 0.5rem;">Share a Blessing</h3>
+            <p style="color: var(--color-text-muted); font-size: 0.88rem; margin-bottom: 2rem;">How has My Father's Sheep podcast impacted your mindset or journey?</p>
+            
+            <form id="testimony-form">
+              <div class="form-group">
+                <label for="testimony-name" class="form-label">Name</label>
+                <input type="text" id="testimony-name" class="form-input" placeholder="Your name or initials" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="testimony-text" class="form-label">Testimony</label>
+                <textarea id="testimony-text" class="form-textarea" placeholder="Type your story here..." required></textarea>
+              </div>
+
+              <div class="form-label" style="margin-bottom: 0.75rem;">Channel Subscriptions</div>
+              <div class="form-checkbox-row">
+                <label class="checkbox-capsule">
+                  <input type="checkbox" id="listener-spotify" checked>
+                  Spotify Listener
+                </label>
+                <label class="checkbox-capsule">
+                  <input type="checkbox" id="listener-youtube" checked>
+                  YouTube Subscriber
+                </label>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem;">Submit Testimony</button>
+            </form>
+          </div>
+
+          <!-- Testimonies Board List -->
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <div class="fellowship-board-header">
+              <h3 style="font-size: 1.55rem; font-family: var(--font-serif);">The Fellowship Board</h3>
+              <span class="board-count-badge" id="testimony-count">0 Blessings Shared</span>
+            </div>
+            
+            <div id="testimony-board" class="masonry-feed">
+              <!-- Dynamic Testimonies Rendered Here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Bottom Newsletter CTA Section -->
+  <section class="footer-cta-section">
+    <div class="footer-glow-blob"></div>
+    <div class="footer-cta-wrapper">
+      <h2>Join the Fellowship</h2>
+      <p>Receive regular updates on new episodes, deep biblical devotionals, priority merchandise drops, and community gatherings.</p>
+      
+      <form class="premium-subscribe-input-group">
+        <input type="email" placeholder="Your email address" aria-label="Email address" required>
+        <button type="submit">Subscribe</button>
+      </form>
+
+      <div class="channel-buttons-row">
+        <a href="https://open.spotify.com/show/7xrIUf5cCHkh6BljT7ALle" target="_blank" class="luxury-channel-btn luxury-channel-btn-spotify">
+          <svg class="channel-btn-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424c-.18.295-.565.387-.86.207-2.377-1.454-5.37-1.783-8.892-.982-.336.076-.67-.135-.746-.47-.077-.337.135-.67.472-.747 3.852-.878 7.144-.51 9.82.13.295.18.387.563.206.862zm1.226-2.724c-.226.367-.707.487-1.074.26-2.72-1.672-6.87-2.157-10.08-1.182-.413.125-.845-.107-.97-.52-.125-.413.108-.844.52-.97 3.676-1.115 8.243-.573 11.344 1.334.367.227.487.707.26 1.073v.005zm.106-2.833C14.452 8.78 8.72 8.59 5.394 9.598c-.527.16-1.084-.14-1.244-.667-.16-.527.14-1.084.667-1.244 3.812-1.157 10.134-.937 14.135 1.44.475.282.63.896.347 1.37-.282.474-.897.63-1.37.348h-.01z"/>
+          </svg>
+          Spotify Channel
+        </a>
+        <a href="https://youtube.com" target="_blank" class="luxury-channel-btn luxury-channel-btn-youtube">
+          <svg class="channel-btn-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.507a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.87.507 9.388.507 9.388.507s7.518 0 9.388-.507a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+          YouTube Channel
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Copyright Info -->
+  <footer class="luxury-footer-bottom">
+    <div class="container">
+      &copy; 2026 My Father's Sheep. All Rights Reserved. "We are lit to be seen, sent to reveal Christ, sustained by belonging to Him."
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

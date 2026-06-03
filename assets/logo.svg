@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <!-- Circular Boundary -->
+  <circle cx="100" cy="100" r="90" fill="none" stroke="currentColor" stroke-width="6" />
+  
+  <!-- Shepherd's Staff (Crook) -->
+  <path d="M 145,170 L 145,70 A 22,22 0 0,0 101,70 A 10,10 0 0,1 111,63 A 12,12 0 0,1 135,70" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" />
+  <path d="M 130,120 C 135,120 145,125 145,130 C 145,135 135,140 130,140 C 125,140 120,135 120,130 C 120,125 125,120 130,120 Z" fill="currentColor" opacity="0.15" />
+  <path d="M 130,120 Q 140,125 145,130 M 130,140 Q 140,135 145,130" stroke="currentColor" stroke-width="3" fill="none" />
+
+  <!-- Center Sheep (Focus) -->
+  <!-- Head/Face -->
+  <path d="M 85,110 Q 100,105 115,110 L 110,140 Q 100,150 90,140 Z" fill="currentColor" stroke="currentColor" stroke-width="2" />
+  <!-- Forehead wool -->
+  <path d="M 82,108 C 85,98 115,98 118,108 Q 100,102 82,108 Z" fill="currentColor" />
+  <!-- Ears -->
+  <path d="M 85,110 C 72,110 65,122 75,125 C 80,122 83,118 85,110 Z" fill="currentColor" />
+  <path d="M 115,110 C 128,110 135,122 125,125 C 120,122 117,118 115,110 Z" fill="currentColor" />
+  <!-- Horns/Wool details -->
+  <circle cx="100" cy="105" r="4" fill="none" stroke="currentColor" stroke-width="1" />
+  <!-- Eyes -->
+  <circle cx="93" cy="120" r="2.5" fill="#FAF6EE" />
+  <circle cx="107" cy="120" r="2.5" fill="#FAF6EE" />
+  <circle cx="93" cy="120" r="1" fill="currentColor" />
+  <circle cx="107" cy="120" r="1" fill="currentColor" />
+  <!-- Snout/Nose -->
+  <path d="M 97,135 L 103,135 L 100,138 Z" fill="#FAF6EE" />
+
+  <!-- Left Sheep (Background) -->
+  <g opacity="0.75" transform="scale(0.8) translate(15, 30)">
+    <path d="M 85,110 Q 100,105 115,110 L 110,140 Q 100,150 90,140 Z" fill="currentColor" />
+    <path d="M 82,108 C 85,98 115,98 118,108 Q 100,102 82,108 Z" fill="currentColor" />
+    <path d="M 85,110 C 72,110 65,122 75,125 Q 83,118 85,110 Z" fill="currentColor" />
+    <path d="M 115,110 C 128,110 135,122 125,125 Q 117,118 115,110 Z" fill="currentColor" />
+    <circle cx="93" cy="120" r="2" fill="#FAF6EE" />
+    <circle cx="107" cy="120" r="2" fill="#FAF6EE" />
+  </g>
+
+  <!-- Right Sheep (Background) -->
+  <g opacity="0.75" transform="scale(0.8) translate(65, 45)">
+    <path d="M 85,110 Q 100,105 115,110 L 110,140 Q 100,150 90,140 Z" fill="currentColor" />
+    <path d="M 82,108 C 85,98 115,98 118,108 Q 100,102 82,108 Z" fill="currentColor" />
+    <path d="M 85,110 C 72,110 65,122 75,125 Q 83,118 85,110 Z" fill="currentColor" />
+    <path d="M 115,110 C 128,110 135,122 125,125 Q 117,118 115,110 Z" fill="currentColor" />
+    <circle cx="93" cy="120" r="2" fill="#FAF6EE" />
+    <circle cx="107" cy="120" r="2" fill="#FAF6EE" />
+  </g>
+
+  <!-- Top Sheep (Background) -->
+  <g opacity="0.6" transform="scale(0.7) translate(70, 20)">
+    <path d="M 85,110 Q 100,105 115,110 L 110,140 Q 100,150 90,140 Z" fill="currentColor" />
+    <path d="M 82,108 C 85,98 115,98 118,108 Q 100,102 82,108 Z" fill="currentColor" />
+    <path d="M 85,110 C 72,110 65,122 75,125 Q 83,118 85,110 Z" fill="currentColor" />
+    <path d="M 115,110 C 128,110 135,122 125,125 Q 117,118 115,110 Z" fill="currentColor" />
+  </g>
+</svg>
