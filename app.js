@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMerchColors();
   initTestimonies();
   initNewsletterToast();
+  initDailyScripture();
 });
 
 /* ==========================================================================
@@ -387,4 +388,28 @@ function initNewsletterToast() {
       }
     });
   }
+}
+
+/* ==========================================================================
+   7. DYNAMIC SCRIPTURE DECO (DAILY RENEWAL)
+   ========================================================================== */
+const SCRIPTURES = [
+  { quote: "As iron sharpens iron, so one man sharpens another.", ref: "Proverbs 27:17" },
+  { quote: "The Lord is my shepherd; I shall not want. He makes me lie down in green pastures...", ref: "Psalm 23:1-2" },
+  { quote: "Watch, stand fast in the faith, be brave, be strong. Let all that you do be done with love.", ref: "1 Corinthians 16:13-14" },
+  { quote: "Create in me a clean heart, O God, and renew a steadfast spirit within me.", ref: "Psalm 51:10" },
+  { quote: "For you were once darkness, but now you are light in the Lord. Walk as children of light.", ref: "Ephesians 5:8" }
+];
+
+function initDailyScripture() {
+  const quoteEl = document.getElementById('daily-scripture');
+  const refEl = document.getElementById('daily-reference');
+  
+  if (!quoteEl || !refEl) return;
+  
+  const randomIdx = Math.floor(Math.random() * SCRIPTURES.length);
+  const selected = SCRIPTURES[randomIdx];
+  
+  quoteEl.textContent = `"${selected.quote}"`;
+  refEl.textContent = selected.ref;
 }

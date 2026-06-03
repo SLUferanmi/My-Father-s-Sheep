@@ -1200,33 +1200,114 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.9rem 1.75rem;
+  padding: 0.9rem 2rem;
   font-size: 0.88rem;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   border-radius: 100px;
   transition: var(--transition-smooth);
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(163, 138, 95, 0.25);
+  color: #FAF6EE;
+  cursor: pointer;
+}
+
+.luxury-channel-btn:hover {
+  background-color: var(--color-accent);
   color: #FFFFFF;
-}
-
-.luxury-channel-btn-spotify {
-  background-color: #1DB954;
-}
-
-.luxury-channel-btn-spotify:hover {
-  background-color: #1aa34a;
+  border-color: var(--color-accent);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(29, 185, 84, 0.3);
+  box-shadow: 0 8px 25px rgba(163, 138, 95, 0.2);
 }
 
-.luxury-channel-btn-youtube {
-  background-color: #FF0000;
+/* Daily Renewal Scripture Plaque */
+.daily-renewal-container {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem auto 4rem auto;
+  max-width: 680px;
+  width: 100%;
 }
 
-.luxury-channel-btn-youtube:hover {
-  background-color: #d60000;
+.daily-renewal-card {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: 2.25rem 3rem;
+  text-align: center;
+  box-shadow: var(--shadow-premium);
+  position: relative;
+  transition: var(--transition-smooth);
+  width: 100%;
+}
+
+.daily-renewal-card:hover {
+  box-shadow: var(--shadow-hover);
+  border-color: var(--color-border-hover);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(255, 0, 0, 0.35);
+}
+
+.daily-renewal-card::before {
+  content: '†';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.daily-renewal-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-accent);
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.daily-renewal-quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.65rem;
+  line-height: 1.45;
+  color: var(--color-text);
+  margin-bottom: 0.85rem;
+}
+
+.daily-renewal-cite {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .daily-renewal-card {
+    padding: 1.75rem 2rem;
+  }
+  .daily-renewal-quote {
+    font-size: 1.35rem;
+  }
+  .daily-renewal-container {
+    margin-bottom: 2.5rem;
+  }
 }
 
 .channel-btn-icon {
