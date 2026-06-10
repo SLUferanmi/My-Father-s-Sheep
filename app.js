@@ -1,3 +1,6 @@
+// Google Sheets Web App URL for shared testimonies (see google_sheets_setup.md for details)
+const GOOGLE_SHEETS_SCRIPT_URL = "";
+
 document.addEventListener('DOMContentLoaded', () => {
   initNavigation();
   initCustomPlayer();
@@ -76,135 +79,188 @@ function initCustomPlayer() {
   const playerCard = document.querySelector('.player-card');
   const playBtn = document.querySelector('.player-btn-play');
   const timeDisplay = document.querySelector('.player-time');
+  const audio = document.getElementById('podcast-audio');
+  const volumeSlider = document.querySelector('.player-volume-slider');
+  const skipBtn = document.querySelector('.player-btn-skip');
+  const forwardBtn = document.querySelector('.player-btn-forward');
   
-  if (!playBtn || !playerCard) return;
-
-  let isPlaying = false;
-  let playTimer = null;
-  let currentSeconds = 105; // Starting at 01:45
-  const totalSeconds = 2712; // Total time 45:12
+  if (!playBtn || !playerCard || !audio) return;
 
   // Format seconds to MM:SS
   function formatTime(secs) {
+    if (isNaN(secs) || secs === Infinity) return '00:00';
     const m = Math.floor(secs / 60).toString().padStart(2, '0');
-    const s = (secs % 60).toString().padStart(2, '0');
+    const s = Math.floor(secs % 60).toString().padStart(2, '0');
     return `${m}:${s}`;
-  }
-
-  function startTimer() {
-    playTimer = setInterval(() => {
-      if (currentSeconds < totalSeconds) {
-        currentSeconds++;
-        updateDisplay();
-      } else {
-        pausePlayer();
-      }
-    }, 1000);
-  }
-
-  function stopTimer() {
-    clearInterval(playTimer);
   }
 
   function updateDisplay() {
     if (timeDisplay) {
-      timeDisplay.textContent = `${formatTime(currentSeconds)} / ${formatTime(totalSeconds)}`;
+      const cur = audio.currentTime || 0;
+      const dur = audio.duration || 0;
+      timeDisplay.textContent = `${formatTime(cur)} / ${formatTime(dur)}`;
     }
   }
 
-  function playPlayer() {
-    isPlaying = true;
+  // Toggle playback on button click
+  playBtn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play().catch(err => {
+        console.warn("Playback failed:", err);
+        showToast("Click Play again or ensure assets/intro.mp3 is loaded", true);
+      });
+    } else {
+      audio.pause();
+    }
+  });
+
+  // Track real audio playback events to update the UI
+  audio.addEventListener('play', () => {
     playerCard.classList.add('playing');
-    // Swap Play SVG with Pause SVG
     playBtn.innerHTML = `
       <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
         <path fill-rule="evenodd" d="M6.75 5.25a.75.75 0 0 1 .75-.75H9a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H7.5a.75.75 0 0 1-.75-.75V5.25Zm7.5 0A.75.75 0 0 1 15 4.5h1.5a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H15a.75.75 0 0 1-.75-.75V5.25Z" clip-rule="evenodd"/>
       </svg>
     `;
-    startTimer();
-    showToast("Now playing: Episode 18 Preview");
-  }
+    showToast("Playing Website Intro");
+  });
 
-  function pausePlayer() {
-    isPlaying = false;
+  audio.addEventListener('pause', () => {
     playerCard.classList.remove('playing');
-    // Swap Pause SVG with Play SVG
     playBtn.innerHTML = `
       <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; margin-left: 3px;">
         <path fill-rule="evenodd" d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z" clip-rule="evenodd"/>
       </svg>
     `;
-    stopTimer();
+  });
+
+  audio.addEventListener('ended', () => {
+    playerCard.classList.remove('playing');
+  });
+
+  audio.addEventListener('timeupdate', updateDisplay);
+  audio.addEventListener('loadedmetadata', updateDisplay);
+  audio.addEventListener('durationchange', updateDisplay);
+
+  // Skip Backward (10s)
+  if (skipBtn) {
+    skipBtn.addEventListener('click', () => {
+      audio.currentTime = Math.max(0, audio.currentTime - 10);
+      updateDisplay();
+    });
   }
 
-  // Initialize time display text
-  updateDisplay();
+  // Skip Forward (10s)
+  if (forwardBtn) {
+    forwardBtn.addEventListener('click', () => {
+      audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 10);
+      updateDisplay();
+    });
+  }
 
-  // Toggle state on click
-  playBtn.addEventListener('click', () => {
-    if (isPlaying) {
-      pausePlayer();
-    } else {
-      playPlayer();
-    }
-  });
+  // Volume control
+  if (volumeSlider) {
+    // Set initial volume
+    audio.volume = volumeSlider.value / 100;
+    volumeSlider.addEventListener('input', () => {
+      audio.volume = volumeSlider.value / 100;
+    });
+  }
+
+  // Initial display setup
+  updateDisplay();
 }
 
 /* ==========================================================================
    3. MERCHANDISE COLOR SWITCHER WITH CARD GLOW
    ========================================================================== */
 function initMerchColors() {
-  const swatchGroups = document.querySelectorAll('.swatch-glow-group');
+  const productCards = document.querySelectorAll('.luxury-product-card');
 
-  swatchGroups.forEach(group => {
-    const swatches = group.querySelectorAll('.pulse-swatch');
-    const productCard = group.closest('.luxury-product-card');
-    const colorLabel = productCard.querySelector('.color-label');
-    const imageContainer = productCard.querySelector('.luxury-image-container');
+  productCards.forEach(card => {
+    const swatches = card.querySelectorAll('.pulse-swatch');
+    const viewButtons = card.querySelectorAll('.view-btn');
+    const imgEl = card.querySelector('.luxury-product-img');
+    const colorLabel = card.querySelector('.color-label');
+    const imageContainer = card.querySelector('.luxury-image-container');
 
+    // Helper function to update the card state (image src, colors, borders)
+    function updateCardState() {
+      const activeSwatch = card.querySelector('.pulse-swatch.active');
+      const activeViewBtn = card.querySelector('.view-btn.active');
+
+      if (!activeSwatch) return;
+
+      const colorName = activeSwatch.getAttribute('data-color');
+      const colorHex = activeSwatch.getAttribute('data-hex');
+      const viewType = activeViewBtn ? activeViewBtn.getAttribute('data-view') : 'front';
+
+      // 1. Update text label
+      if (colorLabel) {
+        colorLabel.textContent = colorName;
+      }
+
+      // 2. Resolve image source and background blend
+      if (imgEl && card.querySelector('[data-product="tshirt"]')) {
+        // T-Shirt has customized white/black mockups
+        if (colorName === 'Black') {
+          imgEl.src = `assets/tshirt-black-${viewType}.png`;
+          if (imageContainer) imageContainer.style.backgroundColor = '#F5F1E8'; // Standard light container background for black t-shirt
+        } else if (colorName === 'White') {
+          imgEl.src = `assets/tshirt-white-${viewType}.png`;
+          if (imageContainer) imageContainer.style.backgroundColor = '#FAF6EE';
+        } else {
+          // Cream, Sand, Olive use white T-shirt mockups layered with mix-blend-mode multiply
+          imgEl.src = `assets/tshirt-white-${viewType}.png`;
+          if (imageContainer) imageContainer.style.backgroundColor = colorHex;
+        }
+      } else if (imgEl && imageContainer) {
+        // Fallback or generic products (like Hoodie)
+        imageContainer.style.backgroundColor = colorHex;
+      }
+
+      // 3. Update container glows
+      let glowColor = 'rgba(163, 138, 95, 0.15)'; // Default gold glow
+      let borderGlow = 'rgba(163, 138, 95, 0.15)';
+
+      if (colorName === 'Black') {
+        glowColor = 'rgba(31, 29, 28, 0.12)';
+        borderGlow = 'rgba(31, 29, 28, 0.2)';
+      } else if (colorName === 'White') {
+        glowColor = 'rgba(255, 255, 255, 0.2)';
+        borderGlow = 'rgba(255, 255, 255, 0.6)';
+      } else if (colorName === 'Olive') {
+        glowColor = 'rgba(85, 107, 47, 0.08)';
+        borderGlow = 'rgba(85, 107, 47, 0.25)';
+      } else if (colorName === 'Sand') {
+        glowColor = 'rgba(210, 180, 140, 0.08)';
+        borderGlow = 'rgba(210, 180, 140, 0.25)';
+      }
+
+      card.style.setProperty('--shadow-premium', `0 10px 40px ${glowColor}`);
+      card.style.borderColor = borderGlow;
+    }
+
+    // Bind swatch click listeners
     swatches.forEach(swatch => {
       swatch.addEventListener('click', () => {
-        // Toggle active states on swatches
         swatches.forEach(s => s.classList.remove('active'));
         swatch.classList.add('active');
-
-        const colorName = swatch.getAttribute('data-color');
-        const colorHex = swatch.getAttribute('data-hex');
-
-        // Update color text label
-        if (colorLabel) {
-          colorLabel.textContent = colorName;
-        }
-
-        // 1. Smoothly update product container background color
-        if (imageContainer) {
-          imageContainer.style.backgroundColor = colorHex;
-        }
-
-        // 2. High-end: adjust the card border-color/shadow glow based on the color swatch
-        if (productCard) {
-          let glowColor = 'rgba(163, 138, 95, 0.15)'; // Default gold glow
-          let borderGlow = 'rgba(163, 138, 95, 0.15)';
-
-          if (colorName === 'Black') {
-            glowColor = 'rgba(31, 29, 28, 0.12)';
-            borderGlow = 'rgba(31, 29, 28, 0.2)';
-          } else if (colorName === 'White') {
-            glowColor = 'rgba(255, 255, 255, 0.2)';
-            borderGlow = 'rgba(255, 255, 255, 0.6)';
-          } else if (colorName === 'Olive') {
-            glowColor = 'rgba(85, 107, 47, 0.08)';
-            borderGlow = 'rgba(85, 107, 47, 0.25)';
-          } else if (colorName === 'Sand') {
-            glowColor = 'rgba(210, 180, 140, 0.08)';
-            borderGlow = 'rgba(210, 180, 140, 0.25)';
-          }
-
-          productCard.style.setProperty('--shadow-premium', `0 10px 40px ${glowColor}`);
-          productCard.style.borderColor = borderGlow;
-        }
+        updateCardState();
       });
     });
+
+    // Bind view button click listeners
+    viewButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        viewButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        updateCardState();
+      });
+    });
+
+    // Initialize initial card state on page load
+    updateCardState();
   });
 }
 
@@ -237,16 +293,74 @@ function initTestimonies() {
   const board = document.getElementById('testimony-board');
   const countLabel = document.getElementById('testimony-count');
 
-  let testimonies = JSON.parse(localStorage.getItem('mfs_testimonies'));
-  if (!testimonies || testimonies.length === 0) {
-    testimonies = INITIAL_TESTIMONIES;
-    localStorage.setItem('mfs_testimonies', JSON.stringify(testimonies));
+  let testimonies = [];
+
+  function renderTestimonies() {
+    if (!board) return;
+    board.innerHTML = '';
+
+    if (countLabel) {
+      countLabel.textContent = `${testimonies.length} Blessings Shared`;
+    }
+
+    testimonies.forEach(t => {
+      const card = document.createElement('div');
+      card.className = 'luxury-testimony-card';
+
+      const badgesHtml = (t.badges || []).map(b => {
+        if (b === 'spotify') return `<span class="badge-tag badge-tag-spotify">Spotify</span>`;
+        if (b === 'youtube') return `<span class="badge-tag badge-tag-youtube">YouTube</span>`;
+        return '';
+      }).join('');
+
+      card.innerHTML = `
+        <div class="grace-quote-mark">“</div>
+        <p class="testimony-quote-text">${escapeHTML(t.text)}</p>
+        <div class="testimony-profile">
+          <div class="profile-details">
+            <h4 class="profile-name">${escapeHTML(t.name)}</h4>
+            <span class="profile-date">${t.date || 'Just Now'}</span>
+          </div>
+          <div class="profile-badges">
+            ${badgesHtml}
+          </div>
+        </div>
+      `;
+      board.appendChild(card);
+    });
   }
 
-  renderTestimonies();
+  // Load testimonies from Google Sheets or fallback to localStorage
+  async function loadTestimonies() {
+    if (GOOGLE_SHEETS_SCRIPT_URL) {
+      try {
+        const response = await fetch(GOOGLE_SHEETS_SCRIPT_URL);
+        if (response.ok) {
+          const data = await response.json();
+          if (Array.isArray(data) && data.length > 0) {
+            testimonies = data;
+            renderTestimonies();
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn("Failed to load testimonies from Google Sheets, using fallback:", err);
+      }
+    }
+
+    // Fallback: local storage
+    testimonies = JSON.parse(localStorage.getItem('mfs_testimonies'));
+    if (!testimonies || testimonies.length === 0) {
+      testimonies = INITIAL_TESTIMONIES;
+      localStorage.setItem('mfs_testimonies', JSON.stringify(testimonies));
+    }
+    renderTestimonies();
+  }
+
+  loadTestimonies();
 
   if (form) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const nameInput = document.getElementById('testimony-name');
@@ -268,51 +382,38 @@ function initTestimonies() {
         name: nameInput.value.trim(),
         text: textInput.value.trim(),
         badges: badges,
-        date: "Just Now"
+        date: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
       };
 
+      if (GOOGLE_SHEETS_SCRIPT_URL) {
+        showToast("Sharing your blessing to the board...");
+        try {
+          // Send to Google Sheets via POST (no-cors for Google Apps Script redirect)
+          await fetch(GOOGLE_SHEETS_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newTestimony)
+          });
+          
+          testimonies.unshift(newTestimony);
+          renderTestimonies();
+          form.reset();
+          showToast("Blessing shared! It is now on the board.");
+          return;
+        } catch (err) {
+          console.warn("Failed to post to Google Sheets, using fallback:", err);
+        }
+      }
+
+      // Local storage fallback
       testimonies.unshift(newTestimony);
       localStorage.setItem('mfs_testimonies', JSON.stringify(testimonies));
-
       renderTestimonies();
       form.reset();
-
-      showToast("Blessing received! Your testimony is on the board.");
-    });
-  }
-
-  function renderTestimonies() {
-    if (!board) return;
-    board.innerHTML = '';
-
-    if (countLabel) {
-      countLabel.textContent = `${testimonies.length} Blessings Shared`;
-    }
-
-    testimonies.forEach(t => {
-      const card = document.createElement('div');
-      card.className = 'luxury-testimony-card';
-
-      const badgesHtml = t.badges.map(b => {
-        if (b === 'spotify') return `<span class="badge-tag badge-tag-spotify">Spotify</span>`;
-        if (b === 'youtube') return `<span class="badge-tag badge-tag-youtube">YouTube</span>`;
-        return '';
-      }).join('');
-
-      card.innerHTML = `
-        <div class="grace-quote-mark">“</div>
-        <p class="testimony-quote-text">${escapeHTML(t.text)}</p>
-        <div class="testimony-profile">
-          <div class="profile-details">
-            <h4 class="profile-name">${escapeHTML(t.name)}</h4>
-            <span class="profile-date">${t.date}</span>
-          </div>
-          <div class="profile-badges">
-            ${badgesHtml}
-          </div>
-        </div>
-      `;
-      board.appendChild(card);
+      showToast("Blessing received! Saved locally to your browser.");
     });
   }
 }

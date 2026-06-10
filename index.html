@@ -6,7 +6,7 @@
   <meta name="description" content="We are lit to be seen, sent to reveal Christ, and sustained by belonging to Him. My Father's Sheep podcast is where the minds of men are transformed into the likeness of Him.">
   <title>My Father's Sheep | Podcast & Community</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="shortcut icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="shortcut icon" href="assets/logo-outline.png" type="image/png">
 </head>
 <body>
 
@@ -21,15 +21,8 @@
   <nav class="navbar">
     <div class="nav-container">
       <a href="#" class="nav-logo" onclick="location.reload();">
-        <div class="logo-graphic">
-          <svg viewBox="0 0 200 200" fill="currentColor" width="100%" height="100%">
-            <circle cx="100" cy="100" r="90" fill="none" stroke="currentColor" stroke-width="6" />
-            <path d="M 145,170 L 145,70 A 22,22 0 0,0 101,70 A 10,10 0 0,1 111,63 A 12,12 0 0,1 135,70" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" />
-            <path d="M 85,110 Q 100,105 115,110 L 110,140 Q 100,150 90,140 Z" fill="currentColor" />
-            <path d="M 82,108 C 85,98 115,98 118,108 Q 100,102 82,108 Z" fill="currentColor" />
-            <path d="M 85,110 C 72,110 65,122 75,125 C 80,122 83,118 85,110 Z" fill="currentColor" />
-            <path d="M 115,110 C 128,110 135,122 125,125 C 120,122 117,118 115,110 Z" fill="currentColor" />
-          </svg>
+        <div class="logo-graphic" style="display: flex; align-items: center; justify-content: center;">
+          <img src="assets/logo-outline.png" alt="My Father's Sheep Logo" style="width: 100%; height: 100%; object-fit: contain;">
         </div>
         <div class="logo-text">
           MY Father's Sheep
@@ -74,14 +67,15 @@
 
           <!-- Glassmorphic Media Player -->
           <div class="player-wrapper">
+            <audio id="podcast-audio" src="assets/intro.mp3" preload="metadata"></audio>
             <div class="player-card">
               <div class="player-header">
                 <div class="player-cover">
-                  <img src="assets/logo.svg" alt="Podcast Album Cover" class="player-cover-img">
+                  <img src="assets/logo-outline.png" alt="Podcast Album Cover" class="player-cover-img">
                 </div>
                 <div class="player-track-info">
-                  <span class="player-track-tag">Recent Episode</span>
-                  <h3 class="player-track-title">Episode 18: Iron & Spirit</h3>
+                  <span class="player-track-tag">Fellowship Intro</span>
+                  <h3 class="player-track-title">Welcome & Intro</h3>
                   <span class="player-track-host">by My Father's Sheep Fellowship</span>
                 </div>
               </div>
@@ -234,14 +228,13 @@
           <div class="shop-item-wrapper">
             <div class="luxury-product-card">
               <!-- Frosted Glass Lock Overlay -->
-              <div class="glass-locked-overlay">
-                <span class="glow-soon-badge">Coming Soon</span>
-                <h4 class="locked-title">Signature Tee</h4>
-                <p class="locked-subtext">Currently in production. Subscribe to our list below for notifications and priority drop access.</p>
-              </div>
-
               <div class="luxury-image-container" id="tee-container">
-                <img src="assets/tshirt.png" alt="Signature Tee Mockup" class="luxury-product-img">
+                <!-- Interactive View Toggle -->
+                <div class="view-toggle" data-product="tshirt">
+                  <button type="button" class="view-btn active" data-view="front">Front</button>
+                  <button type="button" class="view-btn" data-view="back">Back</button>
+                </div>
+                <img src="assets/tshirt-white-front.png" alt="Signature Tee Mockup" class="luxury-product-img" id="tshirt-img">
               </div>
               
               <div class="luxury-product-info">
@@ -260,39 +253,40 @@
                     <div class="pulse-swatch swatch-olive" data-color="Olive" data-hex="#556B2F"></div>
                   </div>
                 </div>
+                <button type="button" class="btn btn-secondary" style="width: 100%; margin-top: 1.5rem; padding: 0.75rem; font-size: 0.8rem;" onclick="showToast('We will notify you at your subscribed email address when the Signature Tee drops!');">Notify Me on Drop</button>
               </div>
             </div>
           </div>
 
-          <!-- Product Card 2: Essential Hoodie -->
+          <!-- Product Card 2: Signature Black Tee -->
           <div class="shop-item-wrapper">
             <div class="luxury-product-card">
-              <!-- Frosted Glass Lock Overlay -->
-              <div class="glass-locked-overlay">
-                <span class="glow-soon-badge">Coming Soon</span>
-                <h4 class="locked-title">Essential Hoodie</h4>
-                <p class="locked-subtext">Currently in production. Subscribe to our list below for notifications and priority drop access.</p>
-              </div>
-
-              <div class="luxury-image-container" id="hoodie-container" style="background-color: #D2B48C;">
-                <img src="assets/hoodie.png" alt="Essential Hoodie Mockup" class="luxury-product-img">
+              <div class="luxury-image-container" id="black-tee-container" style="background-color: #F5F1E8;">
+                <!-- Interactive View Toggle -->
+                <div class="view-toggle" data-product="tshirt">
+                  <button type="button" class="view-btn active" data-view="front">Front</button>
+                  <button type="button" class="view-btn" data-view="back">Back</button>
+                </div>
+                <img src="assets/tshirt-black-front.png" alt="Signature Black Tee Mockup" class="luxury-product-img">
               </div>
               
               <div class="luxury-product-info">
                 <div class="luxury-product-meta">
-                  <h3 class="luxury-product-title">Essential Hoodie</h3>
-                  <span class="luxury-product-price">$54.00</span>
+                  <h3 class="luxury-product-title">Signature Black Tee</h3>
+                  <span class="luxury-product-price">$28.00</span>
                 </div>
-                <p class="luxury-product-desc">Ultra-soft heavy fleece hoodie with drop shoulder, featuring the embroidered flock emblem on the chest.</p>
+                <p class="luxury-product-desc">Relaxed-fit organic combed cotton crewneck in deep black, featuring the circular flock emblem printed on the left chest.</p>
                 <div class="luxury-product-options">
-                  <span class="form-label" style="margin-bottom: 0; font-size: 0.72rem;">Color: <strong class="color-label" style="color: var(--color-accent);">Sand</strong></span>
+                  <span class="form-label" style="margin-bottom: 0; font-size: 0.72rem;">Color: <strong class="color-label" style="color: var(--color-accent);">Black</strong></span>
                   <div class="swatch-glow-group">
-                    <div class="pulse-swatch swatch-sand active" data-color="Sand" data-hex="#D2B48C"></div>
-                    <div class="pulse-swatch swatch-black" data-color="Black" data-hex="#1A1A1A"></div>
+                    <div class="pulse-swatch swatch-black active" data-color="Black" data-hex="#1A1A1A"></div>
+                    <div class="pulse-swatch swatch-white" data-color="White" data-hex="#FFFFFF"></div>
                     <div class="pulse-swatch swatch-cream" data-color="Cream" data-hex="#FAF6EE"></div>
+                    <div class="pulse-swatch swatch-sand" data-color="Sand" data-hex="#D2B48C"></div>
                     <div class="pulse-swatch swatch-olive" data-color="Olive" data-hex="#556B2F"></div>
                   </div>
                 </div>
+                <button type="button" class="btn btn-secondary" style="width: 100%; margin-top: 1.5rem; padding: 0.75rem; font-size: 0.8rem;" onclick="showToast('We will notify you at your subscribed email address when the Signature Black Tee drops!');">Notify Me on Drop</button>
               </div>
             </div>
           </div>
@@ -392,6 +386,12 @@
             <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
           </svg>
           Instagram
+        </a>
+        <a href="https://linktr.ee/osionela06" target="_blank" class="luxury-channel-btn">
+          <svg class="channel-btn-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2a1 1 0 0 1 1 1v6.586l4.293-4.293a1 1 0 1 1 1.414 1.414L14.414 11H19a1 1 0 1 1 0 2h-4.586l4.293 4.293a1 1 0 0 1-1.414 1.414L13 14.414V21a1 1 0 1 1-2 0v-6.586l-4.293 4.293a1 1 0 0 1-1.414-1.414L9.586 13H5a1 1 0 1 1 0-2h4.586L5.293 6.707a1 1 0 0 1 1.414-1.414L11 9.586V3a1 1 0 0 1 1-1z"/>
+          </svg>
+          Linktree
         </a>
       </div>
     </div>
