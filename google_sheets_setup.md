@@ -22,11 +22,17 @@ Follow these steps to connect your website's testimony board to a free, shared G
 3. Copy and paste the following Google Apps Script code into the editor:
 
 ```javascript
-// Google Apps Script to handle Testimony GET (Fetch) and POST (Submit) requests
+// Google Apps Script to handle Testimonies & Newsletter signups
 function doGet(e) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName("Testimonies") || ss.getSheets()[0];
   var data = sheet.getDataRange().getValues();
   var testimonies = [];
+  
+  if (data.length <= 1) {
+    return ContentService.createTextOutput(JSON.stringify([]))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
   
   // Read rows starting from row 2 (skipping headers)
   for (var i = 1; i < data.length; i++) {
@@ -34,11 +40,9 @@ function doGet(e) {
     try {
       badgesList = JSON.parse(data[i][2] || '[]');
     } catch (err) {
-      // Fallback in case of parsing errors
       badgesList = [data[i][2]];
     }
     
-    // Unshift to keep newest at the top
     testimonies.push({
       name: data[i][0],
       text: data[i][1],
@@ -54,14 +58,35 @@ function doGet(e) {
 function doPost(e) {
   try {
     var item = JSON.parse(e.postData.contents);
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
     
-    sheet.appendRow([
-      item.name,
-      item.text,
-      JSON.stringify(item.badges || []),
-      item.date
-    ]);
+    // Route based on submission type
+    if (item.type === "newsletter") {
+      var sheet = ss.getSheetByName("Newsletter");
+      if (!sheet) {
+        sheet = ss.insertSheet("Newsletter");
+        sheet.appendRow(["Email", "Date"]);
+      }
+      sheet.appendRow([
+        item.email,
+        item.date
+      ]);
+    } else {
+      // Default to testimonies
+      var sheet = ss.getSheetByName("Testimonies") || ss.getSheets()[0];
+      // Rename first sheet if it's default 'Sheet1' to make spreadsheet clean
+      if (sheet.getName() === "Sheet1") {
+        sheet.setName("Testimonies");
+        sheet.clearContents();
+        sheet.appendRow(["Name", "Testimony", "Badges", "Date"]);
+      }
+      sheet.appendRow([
+        item.name,
+        item.text,
+        JSON.stringify(item.badges || []),
+        item.date
+      ]);
+    }
     
     return ContentService.createTextOutput(JSON.stringify({ status: "success" }))
       .setMimeType(ContentService.MimeType.JSON);

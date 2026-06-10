@@ -267,26 +267,7 @@ function initMerchColors() {
 /* ==========================================================================
    4. TESTIMONY HUB (FORM & LOCAL PERSISTENCE)
    ========================================================================== */
-const INITIAL_TESTIMONIES = [
-  {
-    name: "David Adebayo",
-    text: "This podcast has been a massive blessing to my walk with God. Listening to the episodes on Spotify during my daily commute has transformed my mindset. I feel more anchored in my identity in Christ.",
-    badges: ["spotify"],
-    date: "May 2026"
-  },
-  {
-    name: "Samuel Thompson",
-    text: "The raw discussions about brotherhood, responsibility, and seeking Christ together really hit home. It's rare to find content that speaks directly to the minds of men with such grace and truth.",
-    badges: ["youtube", "spotify"],
-    date: "April 2026"
-  },
-  {
-    name: "Michael Chen",
-    text: "The aim 'to be seen, sent, and sustained' is not just a slogan; you can feel it in every single conversation. Thank you for answering the call. Truly premium content for the soul.",
-    badges: ["youtube"],
-    date: "March 2026"
-  }
-];
+const INITIAL_TESTIMONIES = [];
 
 function initTestimonies() {
   const form = document.getElementById('testimony-form');
@@ -301,6 +282,20 @@ function initTestimonies() {
 
     if (countLabel) {
       countLabel.textContent = `${testimonies.length} Blessings Shared`;
+    }
+
+    if (testimonies.length === 0) {
+      const placeholder = document.createElement('div');
+      placeholder.className = 'luxury-testimony-card';
+      placeholder.style.textAlign = 'center';
+      placeholder.style.padding = '3rem 2rem';
+      placeholder.innerHTML = `
+        <p class="testimony-quote-text" style="font-size: 1.15rem; color: var(--color-text-muted); font-family: var(--font-serif); font-style: italic;">
+          "No blessings shared yet. Be the first to share a testimony of what God is doing!"
+        </p>
+      `;
+      board.appendChild(placeholder);
+      return;
     }
 
     testimonies.forEach(t => {
@@ -379,6 +374,7 @@ function initTestimonies() {
       if (badges.length === 0) badges.push('spotify'); // Fallback default
 
       const newTestimony = {
+        type: "testimony",
         name: nameInput.value.trim(),
         text: textInput.value.trim(),
         badges: badges,
@@ -478,10 +474,35 @@ function showToast(message, isError = false) {
 function initNewsletterToast() {
   const newsletterForm = document.querySelector('.premium-subscribe-input-group');
   if (newsletterForm) {
-    newsletterForm.addEventListener('submit', (e) => {
+    newsletterForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const emailInput = newsletterForm.querySelector('input');
       if (emailInput && emailInput.value.trim()) {
+        const email = emailInput.value.trim();
+        
+        if (GOOGLE_SHEETS_SCRIPT_URL) {
+          showToast("Sending notification request...");
+          try {
+            await fetch(GOOGLE_SHEETS_SCRIPT_URL, {
+              method: 'POST',
+              mode: 'no-cors',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                type: "newsletter",
+                email: email,
+                date: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+              })
+            });
+            showToast("Welcome! You will be notified the moment the newsletter starts.");
+            emailInput.value = '';
+            return;
+          } catch (err) {
+            console.warn("Failed to subscribe via Google Sheets:", err);
+          }
+        }
+        
         showToast("Welcome to the fellowship! You've been subscribed.");
         emailInput.value = '';
       } else {
