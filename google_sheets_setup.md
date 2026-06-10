@@ -26,7 +26,7 @@ Follow these steps to connect your website's testimony board to a free, shared G
 function doGet(e) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = ss.getSheetByName("Testimonies") || ss.getSheets()[0];
-  var data = sheet.getDataRange().getValues();
+  var data = sheet.getDataRange().getDisplayValues();
   var testimonies = [];
   
   if (data.length <= 1) {
