@@ -1,5 +1,5 @@
 // Google Sheets Web App URL for shared testimonies (see google_sheets_setup.md for details)
-const GOOGLE_SHEETS_SCRIPT_URL = "";
+const GOOGLE_SHEETS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxHDa1vv4VgfV5NT5O3P5bBRd2xm6NHbvRdm5YOzQWNDjrzDC8EUdoMZ5TDW78senB_/exec";
 
 document.addEventListener('DOMContentLoaded', () => {
   initNavigation();
