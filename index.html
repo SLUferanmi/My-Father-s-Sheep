@@ -227,66 +227,57 @@
           <!-- Product Card 1: Signature Tee -->
           <div class="shop-item-wrapper">
             <div class="luxury-product-card">
-              <!-- Frosted Glass Lock Overlay -->
               <div class="luxury-image-container" id="tee-container">
                 <!-- Interactive View Toggle -->
                 <div class="view-toggle" data-product="tshirt">
                   <button type="button" class="view-btn active" data-view="front">Front</button>
                   <button type="button" class="view-btn" data-view="back">Back</button>
                 </div>
-                <img src="assets/tshirt-white-front.png" alt="Signature Tee Mockup" class="luxury-product-img" id="tshirt-img">
+                <div class="luxury-product-img-wrapper" id="tshirt-turntable">
+                  <!-- Front Side of Shirt -->
+                  <div class="shirt-side side-front">
+                    <div class="shirt-color-bg"></div>
+                    <img src="assets/tshirt-blank-front.png" alt="Signature Tee Front" class="shirt-base-img">
+                    <img src="assets/logo-outline.png" alt="Front Logo" class="shirt-print-overlay print-front">
+                  </div>
+                  <!-- Back Side of Shirt -->
+                  <div class="shirt-side side-back">
+                    <div class="shirt-color-bg"></div>
+                    <img src="assets/tshirt-blank-back.png" alt="Signature Tee Back" class="shirt-base-img">
+                    <img src="assets/print-back-white.png" alt="Back Print" class="shirt-print-overlay print-back">
+                  </div>
+                </div>
+                <!-- 3D Turntable Ground Shadow -->
+                <div class="turntable-shadow" id="tshirt-shadow"></div>
               </div>
               
               <div class="luxury-product-info">
                 <div class="luxury-product-meta">
                   <h3 class="luxury-product-title">Signature T-Shirt</h3>
-                  <span class="luxury-product-price">$28.00</span>
+                  <span class="luxury-product-price">₦15,000</span>
                 </div>
                 <p class="luxury-product-desc">Relaxed-fit organic combed cotton crewneck featuring the circular flock emblem printed on the center chest.</p>
-                <div class="luxury-product-options">
+                <div class="luxury-product-options" style="flex-direction: column; align-items: flex-start; gap: 0.85rem;">
                   <span class="form-label" style="margin-bottom: 0; font-size: 0.72rem;">Color: <strong class="color-label" style="color: var(--color-accent);">Cream</strong></span>
-                  <div class="swatch-glow-group">
+                  <div class="swatch-glow-group" style="display: flex; gap: 0.5rem; flex-wrap: wrap; max-width: 100%;">
                     <div class="pulse-swatch swatch-cream active" data-color="Cream" data-hex="#FAF6EE"></div>
                     <div class="pulse-swatch swatch-black" data-color="Black" data-hex="#1A1A1A"></div>
                     <div class="pulse-swatch swatch-white" data-color="White" data-hex="#FFFFFF"></div>
                     <div class="pulse-swatch swatch-sand" data-color="Sand" data-hex="#D2B48C"></div>
                     <div class="pulse-swatch swatch-olive" data-color="Olive" data-hex="#556B2F"></div>
+                    <div class="pulse-swatch swatch-pink" data-color="Dusty Pink" data-hex="#E8C5C8"></div>
+                    <div class="pulse-swatch swatch-purple" data-color="Royal Purple" data-hex="#5C3E5A"></div>
+                    <div class="pulse-swatch swatch-grey" data-color="Heather Grey" data-hex="#8E9094"></div>
+                    <div class="pulse-swatch swatch-sage" data-color="Sage Green" data-hex="#98AD9B"></div>
+                    <div class="pulse-swatch swatch-blue" data-color="Ice Blue" data-hex="#C6D8E2"></div>
+                    <div class="pulse-swatch swatch-terracotta" data-color="Terracotta" data-hex="#C07C65"></div>
+                    <div class="pulse-swatch swatch-ochre" data-color="Mustard Ochre" data-hex="#C29F5D"></div>
+                    <div class="pulse-swatch swatch-navy" data-color="Midnight Navy" data-hex="#1E2530"></div>
+                    <div class="pulse-swatch swatch-forest" data-color="Forest Green" data-hex="#223B2A"></div>
+                    <div class="pulse-swatch swatch-chocolate" data-color="Chocolate Brown" data-hex="#44352D"></div>
                   </div>
                 </div>
                 <button type="button" class="btn btn-secondary" style="width: 100%; margin-top: 1.5rem; padding: 0.75rem; font-size: 0.8rem;" onclick="showToast('We will notify you at your subscribed email address when the Signature Tee drops!');">Notify Me on Drop</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Product Card 2: Signature Black Tee -->
-          <div class="shop-item-wrapper">
-            <div class="luxury-product-card">
-              <div class="luxury-image-container" id="black-tee-container" style="background-color: #F5F1E8;">
-                <!-- Interactive View Toggle -->
-                <div class="view-toggle" data-product="tshirt">
-                  <button type="button" class="view-btn active" data-view="front">Front</button>
-                  <button type="button" class="view-btn" data-view="back">Back</button>
-                </div>
-                <img src="assets/tshirt-black-front.png" alt="Signature Black Tee Mockup" class="luxury-product-img">
-              </div>
-              
-              <div class="luxury-product-info">
-                <div class="luxury-product-meta">
-                  <h3 class="luxury-product-title">Signature Black Tee</h3>
-                  <span class="luxury-product-price">$28.00</span>
-                </div>
-                <p class="luxury-product-desc">Relaxed-fit organic combed cotton crewneck in deep black, featuring the circular flock emblem printed on the left chest.</p>
-                <div class="luxury-product-options">
-                  <span class="form-label" style="margin-bottom: 0; font-size: 0.72rem;">Color: <strong class="color-label" style="color: var(--color-accent);">Black</strong></span>
-                  <div class="swatch-glow-group">
-                    <div class="pulse-swatch swatch-black active" data-color="Black" data-hex="#1A1A1A"></div>
-                    <div class="pulse-swatch swatch-white" data-color="White" data-hex="#FFFFFF"></div>
-                    <div class="pulse-swatch swatch-cream" data-color="Cream" data-hex="#FAF6EE"></div>
-                    <div class="pulse-swatch swatch-sand" data-color="Sand" data-hex="#D2B48C"></div>
-                    <div class="pulse-swatch swatch-olive" data-color="Olive" data-hex="#556B2F"></div>
-                  </div>
-                </div>
-                <button type="button" class="btn btn-secondary" style="width: 100%; margin-top: 1.5rem; padding: 0.75rem; font-size: 0.8rem;" onclick="showToast('We will notify you at your subscribed email address when the Signature Black Tee drops!');">Notify Me on Drop</button>
               </div>
             </div>
           </div>

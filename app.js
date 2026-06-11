@@ -180,47 +180,61 @@ function initMerchColors() {
   productCards.forEach(card => {
     const swatches = card.querySelectorAll('.pulse-swatch');
     const viewButtons = card.querySelectorAll('.view-btn');
-    const imgEl = card.querySelector('.luxury-product-img');
     const colorLabel = card.querySelector('.color-label');
-    const imageContainer = card.querySelector('.luxury-image-container');
+    const imgContainer = card.querySelector('.luxury-image-container');
+    const imgWrapper = card.querySelector('.luxury-product-img-wrapper');
+    const colorBgs = card.querySelectorAll('.shirt-color-bg');
+    const shadow = card.querySelector('.turntable-shadow');
 
-    // Helper function to update the card state (image src, colors, borders)
+    // 1. Initialize swatch background colors immediately from data-hex
+    swatches.forEach(swatch => {
+      const hex = swatch.getAttribute('data-hex');
+      if (hex) {
+        swatch.style.backgroundColor = hex;
+        // Make white swatch readable with a fine border
+        if (hex.toLowerCase() === '#ffffff') {
+          swatch.style.border = '1px solid rgba(0, 0, 0, 0.15)';
+        }
+      }
+    });
+
+    // Track active rotation state (0 or 180 degrees)
+    if (imgWrapper) {
+      imgWrapper.dataset.currentY = '0';
+      imgWrapper.dataset.isDragging = 'false';
+    }
+
+    // Helper function to update color and glow styling
     function updateCardState() {
       const activeSwatch = card.querySelector('.pulse-swatch.active');
-      const activeViewBtn = card.querySelector('.view-btn.active');
-
       if (!activeSwatch) return;
 
       const colorName = activeSwatch.getAttribute('data-color');
       const colorHex = activeSwatch.getAttribute('data-hex');
-      const viewType = activeViewBtn ? activeViewBtn.getAttribute('data-view') : 'front';
 
-      // 1. Update text label
+      // Update color label text
       if (colorLabel) {
         colorLabel.textContent = colorName;
       }
 
-      // 2. Resolve image source and background blend
-      if (imgEl && card.querySelector('[data-product="tshirt"]')) {
-        // T-Shirt has customized white/black mockups
-        if (colorName === 'Black') {
-          imgEl.src = `assets/tshirt-black-${viewType}.png`;
-          if (imageContainer) imageContainer.style.backgroundColor = '#F5F1E8'; // Standard light container background for black t-shirt
-        } else if (colorName === 'White') {
-          imgEl.src = `assets/tshirt-white-${viewType}.png`;
-          if (imageContainer) imageContainer.style.backgroundColor = '#FAF6EE';
-        } else {
-          // Cream, Sand, Olive use white T-shirt mockups layered with mix-blend-mode multiply
-          imgEl.src = `assets/tshirt-white-${viewType}.png`;
-          if (imageContainer) imageContainer.style.backgroundColor = colorHex;
-        }
-      } else if (imgEl && imageContainer) {
-        // Fallback or generic products (like Hoodie)
-        imageContainer.style.backgroundColor = colorHex;
+      // Update background mask colors dynamically
+      colorBgs.forEach(bg => {
+        bg.style.backgroundColor = colorHex;
+      });
+
+      // Apply light/dark contrast classes for print overlays
+      const darkColors = ['Black', 'Olive', 'Royal Purple', 'Midnight Navy', 'Forest Green', 'Chocolate Brown'];
+      const isDark = darkColors.includes(colorName);
+      if (isDark) {
+        card.classList.add('dark-shirt');
+        card.classList.remove('light-shirt');
+      } else {
+        card.classList.add('light-shirt');
+        card.classList.remove('dark-shirt');
       }
 
-      // 3. Update container glows
-      let glowColor = 'rgba(163, 138, 95, 0.15)'; // Default gold glow
+      // Dynamic glow effects on card border
+      let glowColor = 'rgba(163, 138, 95, 0.15)';
       let borderGlow = 'rgba(163, 138, 95, 0.15)';
 
       if (colorName === 'Black') {
@@ -229,19 +243,19 @@ function initMerchColors() {
       } else if (colorName === 'White') {
         glowColor = 'rgba(255, 255, 255, 0.2)';
         borderGlow = 'rgba(255, 255, 255, 0.6)';
-      } else if (colorName === 'Olive') {
-        glowColor = 'rgba(85, 107, 47, 0.08)';
+      } else if (isDark) {
+        glowColor = 'rgba(85, 107, 47, 0.12)';
         borderGlow = 'rgba(85, 107, 47, 0.25)';
-      } else if (colorName === 'Sand') {
-        glowColor = 'rgba(210, 180, 140, 0.08)';
-        borderGlow = 'rgba(210, 180, 140, 0.25)';
+      } else {
+        glowColor = 'rgba(163, 138, 95, 0.1)';
+        borderGlow = 'rgba(163, 138, 95, 0.18)';
       }
 
       card.style.setProperty('--shadow-premium', `0 10px 40px ${glowColor}`);
       card.style.borderColor = borderGlow;
     }
 
-    // Bind swatch click listeners
+    // Bind swatch click color changes
     swatches.forEach(swatch => {
       swatch.addEventListener('click', () => {
         swatches.forEach(s => s.classList.remove('active'));
@@ -250,16 +264,161 @@ function initMerchColors() {
       });
     });
 
-    // Bind view button click listeners
+    // Helper to flip turntable programmatically via buttons
+    function setView(viewType) {
+      const isFlipped = (viewType === 'back');
+      const targetY = isFlipped ? 180 : 0;
+
+      viewButtons.forEach(btn => {
+        if (btn.getAttribute('data-view') === viewType) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      if (imgWrapper) {
+        imgWrapper.dataset.currentY = targetY.toString();
+        imgWrapper.style.transform = `rotateY(${targetY}deg)`;
+      }
+      if (shadow) {
+        shadow.style.transform = 'none';
+      }
+    }
+
+    // Bind view toggle button clicks
     viewButtons.forEach(btn => {
       btn.addEventListener('click', () => {
-        viewButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        updateCardState();
+        const viewType = btn.getAttribute('data-view');
+        setView(viewType);
       });
     });
 
-    // Initialize initial card state on page load
+    // 2. Interactive Desktop Hover Parallax (Follow Mouse)
+    if (imgContainer && imgWrapper) {
+      imgContainer.addEventListener('mousemove', (e) => {
+        if (imgWrapper.dataset.isDragging === 'true') return;
+
+        const rect = imgContainer.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const dx = (x - rect.width / 2) / (rect.width / 2); // -1 to 1
+        const dy = (y - rect.height / 2) / (rect.height / 2); // -1 to 1
+
+        const currentY = parseFloat(imgWrapper.dataset.currentY) || 0;
+        
+        // Tilt relative to mouse position
+        const tiltY = currentY + dx * 22; 
+        const tiltX = -dy * 15;
+
+        imgWrapper.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.04)`;
+
+        // Move ground shadow slightly in opposite direction
+        if (shadow) {
+          shadow.style.transform = `translateX(${-dx * 12}px) scaleX(${1 - Math.abs(dx) * 0.15})`;
+        }
+      });
+
+      imgContainer.addEventListener('mouseleave', () => {
+        if (imgWrapper.dataset.isDragging === 'true') return;
+        const currentY = parseFloat(imgWrapper.dataset.currentY) || 0;
+        imgWrapper.style.transform = `rotateY(${currentY}deg)`;
+        if (shadow) {
+          shadow.style.transform = 'none';
+        }
+      });
+
+      // 3. Touch/Mouse Drag-to-Spin & Snapping
+      let isDragging = false;
+      let startX = 0;
+      let startRotY = 0;
+      let currentRotY = 0;
+
+      imgContainer.addEventListener('pointerdown', (e) => {
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        // If clicking on the view toggle buttons, prevent drag tracking
+        if (e.target.closest('.view-toggle')) return;
+
+        isDragging = true;
+        imgWrapper.dataset.isDragging = 'true';
+        imgContainer.setPointerCapture(e.pointerId);
+
+        startX = e.clientX;
+        startRotY = parseFloat(imgWrapper.dataset.currentY) || 0;
+        currentRotY = startRotY;
+
+        imgWrapper.style.transition = 'none';
+        if (shadow) shadow.style.transition = 'none';
+      });
+
+      imgContainer.addEventListener('pointermove', (e) => {
+        if (!isDragging) return;
+
+        const rect = imgContainer.getBoundingClientRect();
+        const diffX = e.clientX - startX;
+        
+        // Dragging full width turns it 270 degrees
+        const deltaY = (diffX / rect.width) * 270;
+        currentRotY = startRotY + deltaY;
+
+        imgWrapper.style.transform = `rotateY(${currentRotY}deg)`;
+
+        if (shadow) {
+          const scaleVal = 1 - Math.min(Math.abs(diffX / rect.width) * 0.2, 0.2);
+          shadow.style.transform = `scaleX(${scaleVal})`;
+        }
+      });
+
+      imgContainer.addEventListener('pointerup', (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+        imgWrapper.dataset.isDragging = 'false';
+        imgContainer.releasePointerCapture(e.pointerId);
+
+        imgWrapper.style.transition = '';
+        if (shadow) shadow.style.transition = '';
+
+        // Normalize angle to [0, 360)
+        let normalized = ((currentRotY % 360) + 360) % 360;
+        let targetY = 0;
+        let view = 'front';
+
+        if (normalized >= 90 && normalized < 270) {
+          targetY = (currentRotY - normalized) + 180;
+          view = 'back';
+        } else {
+          targetY = (currentRotY - normalized) + (normalized >= 270 ? 360 : 0);
+          view = 'front';
+        }
+
+        imgWrapper.dataset.currentY = targetY.toString();
+        imgWrapper.style.transform = `rotateY(${targetY}deg)`;
+        if (shadow) shadow.style.transform = 'none';
+
+        // Update active class on view buttons
+        viewButtons.forEach(btn => {
+          if (btn.getAttribute('data-view') === view) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+      });
+
+      imgContainer.addEventListener('pointercancel', () => {
+        if (!isDragging) return;
+        isDragging = false;
+        imgWrapper.dataset.isDragging = 'false';
+        imgWrapper.style.transition = '';
+        if (shadow) shadow.style.transition = '';
+
+        const currentY = parseFloat(imgWrapper.dataset.currentY) || 0;
+        imgWrapper.style.transform = `rotateY(${currentY}deg)`;
+        if (shadow) shadow.style.transform = 'none';
+      });
+    }
+
+    // Initialize state on page load
     updateCardState();
   });
 }

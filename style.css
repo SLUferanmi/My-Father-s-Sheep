@@ -678,15 +678,11 @@ a {
   grid-template-columns: repeat(12, 1fr);
   gap: 3.5rem;
   margin-top: 3rem;
+  justify-content: center;
 }
 
 .shop-item-wrapper {
-  grid-column: span 6;
-}
-
-/* Asymmetric staggered heights for luxury look */
-.shop-item-wrapper:nth-child(even) {
-  margin-top: 4rem;
+  grid-column: 4 / span 6;
 }
 
 @media (max-width: 768px) {
@@ -726,24 +722,145 @@ a {
   align-items: center;
   position: relative;
   overflow: hidden;
-  padding: 2.5rem;
+  padding: 2rem;
   transition: var(--transition-smooth);
+  perspective: 1200px;
+}
+
+/* 3D Specular Light Overlay (Game Shader style) */
+.luxury-image-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.08) 100%);
+  pointer-events: none;
+  z-index: 8;
 }
 
 .luxury-product-card:hover .luxury-image-container {
   background-color: #EFEBE0;
 }
 
-.luxury-product-img {
+.luxury-product-img-wrapper {
   width: 90%;
   height: 90%;
-  object-fit: contain;
-  mix-blend-mode: multiply;
-  transition: var(--transition-smooth);
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: grab;
 }
 
-.luxury-product-card:hover .luxury-product-img {
-  transform: scale(1.06);
+.luxury-product-img-wrapper:active {
+  cursor: grabbing;
+}
+
+.shirt-side {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.side-front {
+  transform: translateZ(10px);
+  z-index: 2;
+}
+
+.side-back {
+  transform: rotateY(180deg) translateZ(10px);
+}
+
+/* Colored Silhouette Layer using CSS Masking */
+.shirt-color-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: background-color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.side-front .shirt-color-bg {
+  mask-image: url('assets/tshirt-blank-front.png');
+  -webkit-mask-image: url('assets/tshirt-blank-front.png');
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+}
+
+.side-back .shirt-color-bg {
+  mask-image: url('assets/tshirt-blank-back.png');
+  -webkit-mask-image: url('assets/tshirt-blank-back.png');
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+}
+
+/* Grayscale shading base (wrinkles & folds) multiplied over the color */
+.shirt-base-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* Dynamic Print Graphics Overlay */
+.shirt-print-overlay {
+  position: absolute;
+  pointer-events: none;
+  object-fit: contain;
+  z-index: 5;
+  transition: filter 0.5s ease;
+  transform: translateZ(1px); /* Slight 3D offset from fabric layer */
+}
+
+.print-front {
+  left: 54%;
+  top: 26%;
+  width: 9%;
+  height: 9%;
+}
+
+.print-back {
+  left: 27.73%;
+  top: 18.55%;
+  width: 45.02%;
+  height: 62.21%;
+}
+
+/* Contrast optimization for dark shirts (automatically inverts prints to white/light) */
+.luxury-product-card.dark-shirt .shirt-print-overlay {
+  filter: brightness(0) invert(1);
+}
+
+/* Turntable Ground Shadow */
+.turntable-shadow {
+  position: absolute;
+  bottom: 5%;
+  left: 10%;
+  right: 10%;
+  height: 16px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+  z-index: 1;
+  pointer-events: none;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-locked-overlay {
@@ -835,29 +952,30 @@ a {
 }
 
 .pulse-swatch {
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   cursor: pointer;
   position: relative;
   transition: var(--transition-fast);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .pulse-swatch::after {
   content: '';
   position: absolute;
-  top: -4px;
-  left: -4px;
-  right: -4px;
-  bottom: -4px;
-  border: 1px solid transparent;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border: 1.5px solid transparent;
   border-radius: 50%;
   transition: var(--transition-fast);
 }
 
 .pulse-swatch.active::after {
   border-color: var(--color-accent);
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 /* ==========================================================================
