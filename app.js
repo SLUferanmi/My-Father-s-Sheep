@@ -185,6 +185,62 @@ function initMerchColors() {
     const imgWrapper = card.querySelector('.luxury-product-img-wrapper');
     const colorBgs = card.querySelectorAll('.shirt-color-bg');
     const shadow = card.querySelector('.turntable-shadow');
+    const swatchGroup = card.querySelector('.swatch-glow-group');
+    const arrowLeft = card.querySelector('.arrow-left');
+    const arrowRight = card.querySelector('.arrow-right');
+
+    // Horizontal scroll arrow buttons for mobile swatches carousel
+    function updateArrows() {
+      if (!swatchGroup || !arrowLeft || !arrowRight) return;
+      if (window.innerWidth >= 768) {
+        arrowLeft.classList.remove('visible');
+        arrowRight.classList.remove('visible');
+        return;
+      }
+      
+      const scrollLeft = swatchGroup.scrollLeft;
+      const scrollWidth = swatchGroup.scrollWidth;
+      const clientWidth = swatchGroup.clientWidth;
+
+      if (scrollLeft > 5) {
+        arrowLeft.classList.add('visible');
+      } else {
+        arrowLeft.classList.remove('visible');
+      }
+
+      if (scrollLeft + clientWidth < scrollWidth - 5) {
+        arrowRight.classList.add('visible');
+      } else {
+        arrowRight.classList.remove('visible');
+      }
+    }
+
+    if (swatchGroup) {
+      swatchGroup.addEventListener('scroll', updateArrows);
+      
+      // Use ResizeObserver to automatically calculate layout when swatches container becomes visible
+      if (window.ResizeObserver) {
+        const resizeObserver = new ResizeObserver(() => {
+          updateArrows();
+        });
+        resizeObserver.observe(swatchGroup);
+      } else {
+        window.addEventListener('resize', updateArrows);
+        setTimeout(updateArrows, 150);
+      }
+    }
+
+    if (arrowLeft && swatchGroup) {
+      arrowLeft.addEventListener('click', () => {
+        swatchGroup.scrollBy({ left: -140, behavior: 'smooth' });
+      });
+    }
+
+    if (arrowRight && swatchGroup) {
+      arrowRight.addEventListener('click', () => {
+        swatchGroup.scrollBy({ left: 140, behavior: 'smooth' });
+      });
+    }
 
     // 1. Initialize swatch background colors immediately from data-hex
     swatches.forEach(swatch => {
