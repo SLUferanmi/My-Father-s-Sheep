@@ -105,9 +105,16 @@ function initCustomPlayer() {
   // Toggle playback on button click
   playBtn.addEventListener('click', () => {
     if (audio.paused) {
+      if (audio.readyState === 0) {
+        audio.load();
+      }
       audio.play().catch(err => {
-        console.warn("Playback failed:", err);
-        showToast("Click Play again or ensure assets/intro.mp3 is loaded", true);
+        console.warn("Playback failed, retrying...", err);
+        audio.load();
+        audio.play().catch(err2 => {
+          console.error("Playback retry failed:", err2);
+          showToast("Click Play again or ensure assets/intro.mp3 is loaded", true);
+        });
       });
     } else {
       audio.pause();
@@ -271,6 +278,26 @@ function initMerchColors() {
       // Update color label text
       if (colorLabel) {
         colorLabel.textContent = colorName;
+      }
+
+      // Update order button text and action
+      const orderBtn = document.getElementById('whatsapp-order-btn');
+      if (orderBtn) {
+        orderBtn.textContent = `Order ${colorName} on WhatsApp`;
+        
+        // Production product variant URL link
+        const productionUrl = `https://myfatherssheep.vercel.app/?color=${encodeURIComponent(colorName)}`;
+        
+        // Draft message
+        const baseMessage = `Hi, I saw this and really loved it! I would love to place an order for the Signature T-Shirt in ${colorName} color.\n\nView here: ${productionUrl}`;
+        const encodedText = encodeURIComponent(baseMessage);
+        
+        // WhatsApp URL
+        const whatsappUrl = `https://wa.me/2349074121215?text=${encodedText}`;
+        
+        orderBtn.onclick = () => {
+          window.open(whatsappUrl, '_blank');
+        };
       }
 
       // Update background mask colors dynamically
@@ -472,6 +499,17 @@ function initMerchColors() {
         imgWrapper.style.transform = `rotateY(${currentY}deg)`;
         if (shadow) shadow.style.transform = 'none';
       });
+    }
+
+    // Load color from URL query parameter if present
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlColor = urlParams.get('color');
+    if (urlColor) {
+      const matchingSwatch = Array.from(swatches).find(s => s.getAttribute('data-color').toLowerCase() === urlColor.toLowerCase());
+      if (matchingSwatch) {
+        swatches.forEach(s => s.classList.remove('active'));
+        matchingSwatch.classList.add('active');
+      }
     }
 
     // Initialize state on page load
